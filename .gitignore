@@ -113,7 +113,7 @@ venv.bak/
 #Pycharm
 .idea
 migrations/
-
+_media/
 bootstrap/
 
 # Spyder project settings
