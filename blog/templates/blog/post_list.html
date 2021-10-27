@@ -13,8 +13,8 @@
                     {% endif %}
                     <div class="card-body">
                         <h2 class="card-title h4">{{ p.title | upper }}</h2>
-                        {% if p.hook_text %}}
-                            <h5 class="text_muted"> {{ p.hook_text }} </h5>
+                        {% if p.hook_text %}
+                        <h5 class="text_muted"> {{ p.hook_text }} </h5>
                         {% endif %}
                         <p class="card-text">{{ p.content | truncatechars:100 }}</p>
                         <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
@@ -33,5 +33,4 @@
                         <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">&larr; Newer</a></li>
                         <li class="page-item"><a class="page-link" href="#!">Older &rarr;</a></li>
                     </ul>
-            </div>
 {% endblock %}

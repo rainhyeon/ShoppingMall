@@ -2,6 +2,7 @@
 {% block head_title %}
     {{ post.title }} - Blog
 {% endblock %}
+
 {% block main_area %}
 
                     <!-- Post content-->
@@ -25,13 +26,13 @@
                                 <img class="img-fluid rounded" src="https://picsum.photos/seed/{{ post.id }}/800/200" alt="random image"/>
                             {% endif %}
                         </figure>
+
                         <!-- Post content-->
                         <section class="mb-5">
                             <p>{{ post.content }}</p>
                             {% if post.file_upload %}
                                 <a href="{{ post.file_upload.url }}" role="button" class="btn btn-outline-dark" download>
                                     Download :
-
                                     {% if post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
                                         <i class="fas fa-file-excel"></i>
                                     {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
@@ -44,6 +45,7 @@
                             {% endif %}
                         </section>
                     </div>
+
                     <!-- Comments section-->
                     <div class="mb-5" id="comment-area">
                         <div class="card bg-light">
