@@ -54,11 +54,28 @@ class TestView(TestCase):
         self.assertEqual(about.attrs['href'], '/about_me/')
 
     def category_test(self, soup):
-        category=soup.find('div', id='category-card')
+        category = soup.find('div', id='categories-card')
         self.assertIn('Categories', category.text)
         self.assertIn(f'{self.category_programming.name} ({self.category_programming.post_set.count()})', category.text)
         self.assertIn(f'{self.category_culture.name} ({self.category_culture.post_set.count()})', category.text)
         self.assertIn(f'미분류 (1)', category.text)
+
+    def test_category_page(self):
+        # 카테고리 페이지 url로 불러오기
+        response = self.client.get(self.category_programming.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        # beautifulsoup4로 html을 parser하기
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.navbar_test(soup)
+        self.category_test(soup)
+        # 카테고리 name을 포함하고있는지
+        self.assertIn(self.category_programming.name, soup.h1.text)
+        # 카테고리에 포함된 post만 포함하고 있는지
+        main_area = soup.find('div', id='main-area')
+        self.assertIn(self.category_programming.name, main_area.text)
+        self.assertIn(self.post_001.title, main_area.text)
+        self.assertNotIn(self.post_002.title, main_area.text)
+        self.assertNotIn(self.post_003.title, main_area.text)
 
     def test_post_list(self):
         self.assertEqual(Post.objects.count(), 3)
@@ -82,7 +99,7 @@ class TestView(TestCase):
 
         post_001_card = main_area.find('div', id="post-1")
         self.assertIn(self.post_001.title, post_001_card.text)
-        self.assertIn(self.post_001.category.nmae, post_001_card.text)
+        self.assertIn(self.post_001.category.name, post_001_card.text)
 
         post_002_card = main_area.find('div', id="post-2")
         self.assertIn(self.post_002.title, post_002_card.text)
@@ -103,7 +120,7 @@ class TestView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         main_area = soup.find('div',id='main-area')
-        self.assertIn('아직 게시물이 없습니다.',main_area.text)
+        self.assertIn('아직 게시물이 없습니다.', main_area.text)
 
     def test_post_detail(self):
         # 포스트 하나가 있다

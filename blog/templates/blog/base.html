@@ -20,14 +20,15 @@
             <div class="col-md-4 col-lg-3">
                 <!-- Search widget-->
                 <div class="card mb-4">
-                    <div class="card-header"><i class="fas fa-search"></i> &nbsp;&nbsp;Search</div>
+                    <div class="card-header">
+                        <i class="fas fa-search"></i> &nbsp;&nbsp;Search
+                    </div>
                     <div class="card-body">
                         <div class="input-group">
                             <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
                             <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                         </div>
                     </div>
-                </div>
                 </div>
                 <!-- Categories widget-->
                 <div class="card mb-4" id="categories-card">
@@ -38,11 +39,11 @@
                         <div class="row">
                                 <ul>
                                     {% for c in categories %}
-                                    <li><a href="#!">{{c}} ({{c.post_set.count}})</a></li>
+                                    <li><a href="http://127.0.0.1:8000/blog/category/{{c.slug}}">{{c}} ({{c.post_set.count}})</a></li>
                                     {% endfor %}
-                                    <li><a href="#!">미분류 ({{no_category_post_count}})</a></li>
+                                    <li><a href="http://127.0.0.1:8000/blog/category/no_category">미분류 ({{no_category_post_count}})</a></li>
                                 </ul>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
