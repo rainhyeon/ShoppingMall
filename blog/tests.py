@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Comment
 
 
 # Beautirulsoup4 설치하기 #
@@ -46,6 +46,12 @@ class TestView(TestCase):
         )
         self.post_003.tags.add(self.tag_python)
         self.post_003.tags.add(self.tag_python_kor)
+
+        self.comment_001 = Comment.objects.create(
+            post=self.post_001,
+            author=self.user_trump,
+            content='첫번째 댓글입니다.'
+        )
 
     def navbar_test(self, soup):
         # 네비게이션바가 있다
@@ -267,4 +273,10 @@ class TestView(TestCase):
         # 아직 작성중
         # 포스트의 내용이 있는가
         self.assertIn(self.post_001.content, post_area.text)
+
         self.assertIn(self.user_james.username.upper(), post_area.text)
+
+        comments_area = soup.find('div', id='comment-area')
+        comment_001_area = comments_area.find('div', id='comment-1')
+        self.assertIn(self.comment_001.author.username, comment_001_area.text)
+        self.assertIn(self.comment_001.content, comment_001_area.text)
